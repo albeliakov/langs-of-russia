@@ -1,0 +1,56 @@
+name: Cleanup old Docker images
+
+on:
+  schedule:
+    - cron: '0 3 * * *'  # Каждый день в 03:00 UTC
+  workflow_dispatch:
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cleanup old tags from DockerHub
+        uses: actions/github-script@v7
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          IMAGE_NAME: yourdockerhubuser/your-image-name
+        with:
+          script: |
+            const fetch = require('node-fetch');
+
+            async function cleanup() {
+              const authRes = await fetch("https://hub.docker.com/v2/users/login/", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  username: process.env.DOCKER_USERNAME,
+                  password: process.env.DOCKER_PASSWORD,
+                }),
+              });
+              const authData = await authRes.json();
+              const token = authData.token;
+
+              const repo = process.env.IMAGE_NAME.replace('/', '%2F');
+              const listRes = await fetch(`https://hub.docker.com/v2/repositories/${process.env.IMAGE_NAME}/tags?page_size=100`, {
+                headers: { Authorization: `JWT ${token}` },
+              });
+              const tags = await listRes.json();
+
+              const now = new Date();
+              for (const tag of tags.results) {
+                if (tag.name === 'latest') continue;
+
+                const pushedAt = new Date(tag.last_updated);
+                const ageInDays = (now - pushedAt) / (1000 * 60 * 60 * 24);
+                if (ageInDays > 7) {
+                  console.log(`Deleting tag: ${tag.name}`);
+                  await fetch(`https://hub.docker.com/v2/repositories/${process.env.IMAGE_NAME}/tags/${tag.name}/`, {
+                    method: 'DELETE',
+                    headers: { Authorization: `JWT ${token}` },
+                  });
+                }
+              }
+            }
+
+            cleanup();
