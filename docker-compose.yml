@@ -8,8 +8,4 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - data:/app/src
-
-volumes:
-  data:
-    driver: local
+      - /var/lib/langs-of-russia/data:/app/src 
