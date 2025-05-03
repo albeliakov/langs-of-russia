@@ -69,4 +69,5 @@ htmlcov/
 .coverage.*
 
 # Any
-instance/
+*instance/
+data/

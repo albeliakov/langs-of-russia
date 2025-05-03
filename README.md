@@ -1,7 +1,8 @@
 # Запуск
 ```bash
-# docker-compose pull       # подтянуть обновлённые образы (если используются внешние)
-docker-compose up --build -d
+docker-compose up --build -d  # собрать и запустить
+docker-compose logs -f web  # логи
+docker-compose down # остановить и удалить
 ```
 
 # Запросить файл БД с удаленной машины
