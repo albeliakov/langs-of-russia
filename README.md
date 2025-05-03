@@ -1,5 +1,6 @@
 # Запуск
 ```bash
+# docker-compose pull       # подтянуть обновлённые образы (если используются внешние)
 docker-compose up --build -d
 ```
 
