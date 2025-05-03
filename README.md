@@ -1,4 +1,5 @@
 # Запуск
+Нужно склонировать проект к себе на хост и использовать docker-compose:
 ```bash
 docker-compose up --build -d  # собрать и запустить
 docker-compose logs -f web  # логи
