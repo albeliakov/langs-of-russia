@@ -1,0 +1,25 @@
+# виртуальные окружения
+venv/
+.venv/
+*.env/
+
+# кеши Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# git, IDE, прочее мусорное
+.git/
+.gitignore
+.vscode/
+.idea/
+
+# локальные настройки и бэкапы
+*.sqlite
+*.db
+*.log
+.DS_Store
+
+
+# доп
+instance/

@@ -1,0 +1,97 @@
+/* 1. Задаём body как флекс-контейнер во всю высоту экрана */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 2. Хедер фиксированной высоты (по содержимому) */
+/*    а карта займет всё оставшееся пространство */
+header {
+  flex: 0 0 auto;
+}
+
+/* 3. Контейнер карты растягивается по вертикали */
+#rf-map {
+  flex: 1 1 auto;
+  overflow: hidden;
+}
+
+/* 4. Сам SVG подстраивается по ширине и высоте родителя */
+#rf-map svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+
+/* Цвета для каждого округа */
+.fd-central        { fill: #f44336; }
+.fd-northwest      { fill: #2196f3; }
+.fd-southern       { fill: #4caf50; }
+.fd-northcaucasus  { fill: #ff9800; }
+.fd-volga          { fill: #9c27b0; }
+.fd-ural           { fill: #3f51b5; }
+.fd-siberian       { fill: #009688; }
+.fd-far-east       { fill: #ffc107; }
+
+/* Все пути — с одинаковой границей */
+svg path {
+  stroke: #ffffff;       /* цвет границ (можно поменять) */
+  stroke-width: 1;       /* одинаковая толщина всех границ */
+  cursor: pointer;       /* курсор на весь путь */
+}
+
+/* Убираем hover-подсветку на отдельном пути */
+/* svg path:hover { opacity: 0.9; } */
+
+/* Подсветка всего округа по классy */
+.highlight {
+  stroke: #000000;       /* цвет подсветки */
+  stroke-width: 2;       /* чуть толще граница при подсветке */
+  opacity: 0.8;
+}
+
+/* Стили всплывающего списка языков */
+#language-list {
+  position: absolute;
+  background: white;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 8px;
+  z-index: 1000;
+}
+#language-list div {
+  cursor: pointer;
+  margin: 4px 0;
+}
+
+/* Tooltip (не меняем) */
+#tooltip {
+  position: absolute;
+  background: white;
+  padding: 5px 10px;
+  border: 1px solid black;
+  border-radius: 4px;
+  pointer-events: none;
+  font-size: 14px;
+  z-index: 1000;
+}
+
+/* Блок задач (не меняем) */
+.task-block {
+  background: #fafafa;
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 8px;
+}
+.task-block h3 {
+  margin-top: 0;
+}
+
+.task-desc {
+  white-space: pre-wrap;
+}
