@@ -7,6 +7,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - "5000:5000"
+    restart: unless-stopped  # 	Перезапускается, пока ты явно не остановишь
     # Монтируем на хосте файл ./data/app.db
     # в контейнере он будет доступен как /app/src/app.db
     volumes:
